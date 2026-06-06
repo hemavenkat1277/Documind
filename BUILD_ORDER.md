@@ -5,7 +5,7 @@ Use this guide when you rebuild DocuMind from scratch in another folder. Build e
 ## Short Version
 
 ```text
-config -> schema -> db -> services -> kafka -> schemas -> api -> worker -> docker -> tests
+config -> schema -> db -> LangChain services -> kafka -> schemas -> api -> worker -> docker -> tests
 ```
 
 Do not start with Docker or FastAPI first. Start with the database schema and small service functions, because those are the foundation of the whole project.
@@ -23,6 +23,7 @@ Goal: define the libraries, environment variables, and ignored local files.
 You should understand:
 
 - Which Python packages are needed.
+- Which LangChain packages are used: `langchain-core` and `langchain-text-splitters`.
 - Which services the app depends on: PostgreSQL, Redis, Kafka/Redpanda.
 - Which files should not be committed, such as `.env`, `.venv`, cache files, and uploaded documents.
 
@@ -84,7 +85,7 @@ This file should provide:
 - A FastAPI dependency for getting a database connection.
 - Pool startup and shutdown helpers.
 
-## 5. Core RAG Utilities
+## 5. Core LangChain RAG Utilities
 
 Create these before the API and worker:
 
@@ -92,7 +93,7 @@ Create these before the API and worker:
 - `app/services/chunking.py`
 - `app/services/embeddings.py`
 
-Goal: build the basic document processing pipeline.
+Goal: build the basic LangChain-powered document processing pipeline.
 
 Build them in this order:
 
@@ -100,15 +101,15 @@ Build them in this order:
    Extract text from `.txt`, `.md`, `.pdf`, and `.docx` files.
 
 2. `chunking.py`
-   Split long text into overlapping chunks.
+   Convert text into LangChain `Document` objects and split them with `RecursiveCharacterTextSplitter`.
 
 3. `embeddings.py`
-   Convert text chunks into vector embeddings.
+   Implement a LangChain `Embeddings` class and convert text chunks into vector embeddings.
 
 At this point, you should be able to go from:
 
 ```text
-uploaded file -> extracted text -> chunks -> embeddings
+uploaded file -> extracted text -> LangChain Documents -> chunks -> LangChain embeddings
 ```
 
 ## 6. Retrieval Logic
@@ -129,7 +130,7 @@ Build them in this order:
    Embed the question, search PostgreSQL with pgvector, and rerank candidate chunks.
 
 3. `llm.py`
-   Generate an answer from the retrieved context.
+   Generate an answer from the retrieved context using a LangChain runnable chain.
 
 4. `evaluation.py`
    Record latency, top retrieval score, cache usage, and answer length.
@@ -277,10 +278,10 @@ By the end, you should be able to explain:
 - How FastAPI receives and stores uploaded documents.
 - Why Kafka is used for asynchronous document processing.
 - How document text becomes chunks.
-- How chunks become embeddings.
+- How LangChain `Document` objects are split into chunks.
+- How chunks become embeddings through the LangChain `Embeddings` interface.
 - How pgvector performs semantic similarity search.
 - Why reranking improves retrieval quality.
 - How retrieved context is turned into an answer.
 - How Redis caching reduces repeated query latency.
 - What metrics are tracked for monitoring retrieval quality and performance.
-
