@@ -24,6 +24,7 @@ You should understand:
 
 - Which Python packages are needed.
 - Which LangChain packages are used: `langchain-core` and `langchain-text-splitters`.
+- Which Hugging Face packages are used: `langchain-huggingface` and `sentence-transformers`.
 - Which services the app depends on: PostgreSQL, Redis, Kafka/Redpanda.
 - Which files should not be committed, such as `.env`, `.venv`, cache files, and uploaded documents.
 
@@ -104,7 +105,7 @@ Build them in this order:
    Convert text into LangChain `Document` objects and split them with `RecursiveCharacterTextSplitter`.
 
 3. `embeddings.py`
-   Implement a LangChain `Embeddings` class and convert text chunks into vector embeddings.
+   Configure LangChain `HuggingFaceEmbeddings` with `BAAI/bge-small-en-v1.5` and convert text chunks into vector embeddings.
 
 At this point, you should be able to go from:
 
@@ -279,7 +280,7 @@ By the end, you should be able to explain:
 - Why Kafka is used for asynchronous document processing.
 - How document text becomes chunks.
 - How LangChain `Document` objects are split into chunks.
-- How chunks become embeddings through the LangChain `Embeddings` interface.
+- How chunks become embeddings through LangChain `HuggingFaceEmbeddings`.
 - How pgvector performs semantic similarity search.
 - Why reranking improves retrieval quality.
 - How retrieved context is turned into an answer.

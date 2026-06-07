@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     upload_dir: Path = Path("storage/uploads")
 
     embedding_dim: int = Field(default=384, ge=64)
+    emdbeddin_model_name: str = "BAAI/bge-small-en-v1.5"
+    embedding_device: str = "cpu"
+    normalize_embeddings: bool = True
     chunk_size: int = Field(default=900, ge=200)
     chunk_overlap: int = Field(default=160, ge=0)
     retrieval_top_k: int = Field(default=8, ge=1)
