@@ -125,7 +125,7 @@ Create:
 Build them in this order:
 
 1. `reranker.py`
-   Score query and context pairs after vector search.
+   Score query and context pairs after vector search with a Transformers cross-encoder model.
 
 2. `retrieval.py`
    Embed the question, search PostgreSQL with pgvector, and rerank candidate chunks.
@@ -283,6 +283,7 @@ By the end, you should be able to explain:
 - How chunks become embeddings through LangChain `HuggingFaceEmbeddings`.
 - How pgvector performs semantic similarity search.
 - Why reranking improves retrieval quality.
+- How a cross-encoder reranker compares the full question and full chunk together.
 - How retrieved context is turned into an answer.
 - How Redis caching reduces repeated query latency.
 - What metrics are tracked for monitoring retrieval quality and performance.
