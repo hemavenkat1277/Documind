@@ -36,7 +36,8 @@ async def retrieve(
     return [
         {
             **item.candidate,
-            
+            "similarity":float(item.candidate["similarity"]),
+            "rerank_score":item.rerank_score,
         }
         for item in get_reranker().rerank(question,candidates,limit=limit)
     ]
