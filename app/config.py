@@ -22,7 +22,12 @@ class Settings(BaseSettings):
     chunk_overlap: int = Field(default=160, ge=0)
     retrieval_top_k: int = Field(default=8, ge=1)
     rerank_top_k: int = Field(default=4, ge=1)
+    reranker_model_name: str= "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    reranker_device: str = "cpu"
     cache_ttl_seconds: int = Field(default=300, ge=0)
+    gemini_api_key: str = Field(default="",repr=False)
+    gemini_model: str="gemini-2.5-flash"
+    gemini_temparature : float=Field(default=0.2,ge=0,le=2)
 
 
 @lru_cache
