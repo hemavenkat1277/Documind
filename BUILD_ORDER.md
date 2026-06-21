@@ -131,7 +131,7 @@ Build them in this order:
    Embed the question, search PostgreSQL with pgvector, and rerank candidate chunks.
 
 3. `llm.py`
-   Generate an answer from the retrieved context using a LangChain runnable chain.
+   Generate an answer from the retrieved context using a small, readable LangChain runnable chain.
 
 4. `evaluation.py`
    Record latency, top retrieval score, cache usage, and answer length.
